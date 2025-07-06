@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import AppRegister from '@/components/AppRegister.vue'
+</script>
+
 <template>
-  <main>This is a home page.</main>
+  <AppRegister />
 </template>
