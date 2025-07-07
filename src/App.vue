@@ -5,13 +5,9 @@ import AppFooter from './components/AppFooter.vue'
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col justify-between">
     <AppNavbar />
-    <div class="flex-1">
-      <RouterView />
-    </div>
-    <div class="-mt-14 sm:mt-0">
-      <AppFooter />
-    </div>
+    <RouterView />
+    <AppFooter />
   </div>
 </template>

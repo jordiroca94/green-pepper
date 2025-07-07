@@ -16,4 +16,4 @@
 
 ## Live Demo
 
-Check out the app in action: [https://green-pepper.vercel.app](https://green-pepper.vercel.app)
+Check out the app in action: [Green Pepper](https://green-pepper.vercel.app)

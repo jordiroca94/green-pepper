@@ -10,3 +10,13 @@ body {
   font-size: 16px;
   line-height: 1.6;
 }
+
+/* Global input styling - green-600 focus rings by default */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: rgb(22 163 74); /* green-600 */
+  box-shadow: 0 0 0 1px rgb(22 163 74); /* green-600 with opacity for ring effect */
+  transition: all 0.2s ease-in-out;
+}
