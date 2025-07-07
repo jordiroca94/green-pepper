@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import AppRegister from '@/components/AppRegister.vue'
+import AppNotes from '@/components/AppNotes.vue'
 </script>
 
 <template>
-  <AppRegister />
+  <AppNotes />
 </template>

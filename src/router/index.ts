@@ -9,14 +9,15 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
     },
-    {
-      path: '/register',
-      name: 'register',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/RegisterView.vue'),
-    },
+    // In case we want to add more routes...
+    // {
+    //   path: '/register',
+    //   name: 'register',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (About.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import('../views/RegisterView.vue'),
+    // },
   ],
 })
 
