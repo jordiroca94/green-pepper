@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 max-w-3xl flex flex-col mx-auto">
+  <div class="p-4 flex flex-col md:mx-auto">
     <h2 class="text-2xl font-bold mb-4">My Notes</h2>
     <input
       v-model="searchQuery"
