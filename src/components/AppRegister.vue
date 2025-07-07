@@ -1,3 +1,4 @@
+<!-- CURRENTLY UNUSED, KEEPING IT HERE IN CASE THAT I WANT TO USE A NON LOCAL DB -->
 <template>
   <div
     class="min-h-screen bg-gradient-to-tr from-gray-100 to-white flex items-center justify-center -mt-[61px]"

@@ -4,7 +4,7 @@
       <span class="text-sm">&copy; 2025 Green Pepper. All rights reserved.</span>
 
       <a
-        href="https://github.com/jordiroca94"
+        href="https://github.com/jordiroca94/green-pepper"
         target="_blank"
         rel="noopener"
         class="hover:text-gray-200 transition-colors duration-200"

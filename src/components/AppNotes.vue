@@ -17,8 +17,8 @@
           ><br />
           <span>{{ note.description }}</span>
         </div>
-        <div class="space-x-2">
-          <button @click="startEdit(note)" class="text-blue-600">Edit</button>
+        <div class="space-x-2 whitespace-nowrap">
+          <button @click="startEdit(note)" class="text-gray-400">Edit</button>
           <button @click="removeNote(note.id!)" class="text-red-600">Delete</button>
         </div>
       </li>
