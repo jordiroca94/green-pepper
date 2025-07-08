@@ -1,72 +1,77 @@
 <template>
-  <div class="p-4 flex flex-col md:mx-auto">
-    <h2 class="text-2xl font-bold mb-4">My Notes</h2>
-    <input
-      v-model="searchQuery"
-      placeholder="Search notes..."
-      class="border rounded-md p-2 mb-4 w-full"
-    />
-    <ul class="pb-6">
-      <li
-        v-for="note in filteredNotes"
-        :key="note.id"
-        class="border-b py-2 flex justify-between items-start"
-      >
-        <div>
-          <strong>{{ note.title }}</strong
-          ><br />
-          <span>{{ note.description }}</span>
-        </div>
-        <div class="space-x-2 whitespace-nowrap">
-          <button @click="startEdit(note)" class="text-gray-400">Edit</button>
-          <button @click="removeNote(note.id!)" class="text-red-600">Delete</button>
-        </div>
-      </li>
-    </ul>
-    <div class="mb-5">
-      <button
-        class="flex items-center gap-2 cursor-pointer bg-green-600 hover:bg-white group px-3 py-2 w-full justify-center rounded-md border border-transparent hover:border-green-600 transition-colors"
-        @click="toggleForm"
-      >
-        <Plus
-          class="w-6 h-6 text-white group-hover:text-green-600 transition-transform duration-300"
-          :class="{ 'rotate-45': showForm }"
-        />
-        <span class="text-white group-hover:text-green-600 font-medium transition-colors">
-          {{ showForm ? 'Hide Form' : 'Add Note' }}
-        </span>
-      </button>
-    </div>
-
-    <form
-      v-if="showForm || editingNoteId !== null"
-      @submit.prevent="handleSave"
-      class="mb-4 space-y-2"
-    >
-      <h2 class="text-2xl font-bold mb-4">Add Note</h2>
-      <input v-model="form.title" placeholder="Title" class="border rounded-md p-2 w-full" />
-      <textarea
-        v-model="form.description"
-        placeholder="Description"
-        class="border rounded-md p-2 w-full"
-      ></textarea>
-      <div class="flex flex-col gap-2">
-        <button
-          class="flex items-center gap-2 cursor-pointer bg-green-600 hover:bg-white hover:text-green-600 text-white group px-3 py-2 w-full justify-center rounded-md border border-transparent hover:border-green-600 transition-colors"
-          type="submit"
+  <div class="flex justify-center">
+    <div class="p-4 max-w-3xl w-full">
+      <h2 class="text-2xl font-bold mb-4">My Notes</h2>
+      <input
+        v-model="searchQuery"
+        placeholder="Search notes..."
+        class="border rounded-md p-2 mb-4 w-full"
+      />
+      <ul class="pb-6">
+        <li
+          v-for="note in filteredNotes"
+          :key="note.id"
+          class="border-b py-2 flex justify-between items-start"
         >
-          {{ editingNoteId === null ? 'Save' : 'Update' }}
-        </button>
+          <div>
+            <strong>{{ note.title }}</strong
+            ><br />
+            <span>{{ note.description }}</span>
+          </div>
+          <div class="space-x-2 whitespace-nowrap">
+            <button @click="startEdit(note)" class="text-gray-400">Edit</button>
+            <button @click="removeNote(note.id!)" class="text-red-600">Delete</button>
+          </div>
+        </li>
+      </ul>
+      <div class="mb-5">
         <button
-          v-if="editingNoteId !== null"
-          type="button"
-          class="flex items-center gap-2 cursor-pointer hover:bg-green-600 text-green-600 hover:text-white group px-3 py-2 w-full justify-center rounded-md border hover:border-transparent border-green-600 transition-colors"
-          @click="cancelEdit"
+          class="flex items-center gap-2 cursor-pointer bg-green-600 hover:bg-white group px-3 py-2 w-full justify-center rounded-md border border-transparent hover:border-green-600 transition-colors"
+          @click="toggleForm"
         >
-          Cancel
+          <Plus
+            class="w-6 h-6 text-white group-hover:text-green-600 transition-transform duration-300"
+            :class="{ 'rotate-45': showForm }"
+          />
+          <span class="text-white group-hover:text-green-600 font-medium transition-colors">
+            {{ showForm ? 'Hide Form' : 'Add Note' }}
+          </span>
         </button>
       </div>
-    </form>
+
+      <form
+        v-if="showForm || editingNoteId !== null"
+        @submit.prevent="handleSave"
+        class="mb-4 space-y-2"
+      >
+        <h2 class="text-2xl font-bold mb-4">Add Note</h2>
+        <input v-model="form.title" placeholder="Title" class="border rounded-md p-2 w-full" />
+        <textarea
+          v-model="form.description"
+          placeholder="Description"
+          class="border rounded-md p-2 w-full"
+        ></textarea>
+
+        <p v-if="formError" class="text-red-600 font-medium">{{ formError }}</p>
+
+        <div class="flex flex-col gap-2">
+          <button
+            class="flex items-center gap-2 cursor-pointer bg-green-600 hover:bg-white hover:text-green-600 text-white group px-3 py-2 w-full justify-center rounded-md border border-transparent hover:border-green-600 transition-colors"
+            type="submit"
+          >
+            {{ editingNoteId === null ? 'Save' : 'Update' }}
+          </button>
+          <button
+            v-if="editingNoteId !== null"
+            type="button"
+            class="flex items-center gap-2 cursor-pointer hover:bg-green-600 text-green-600 hover:text-white group px-3 py-2 w-full justify-center rounded-md border hover:border-transparent border-green-600 transition-colors"
+            @click="cancelEdit"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -90,6 +95,7 @@ interface Note {
 
 const notes = ref<Note[]>([])
 const form = ref<Note>({ title: '', description: '' })
+const formError = ref('')
 const editingNoteId = ref<number | null>(null)
 const searchQuery = ref('')
 
@@ -98,6 +104,13 @@ const loadNotes = async () => {
 }
 
 const handleSave = async () => {
+  if (!form.value.title.trim() || !form.value.description.trim()) {
+    formError.value = 'Title and description are required.'
+    return
+  }
+
+  formError.value = ''
+
   if (editingNoteId.value !== null) {
     await updateNote({ ...form.value, id: editingNoteId.value })
   } else {
@@ -106,6 +119,7 @@ const handleSave = async () => {
       description: form.value.description,
     })
   }
+
   resetForm()
   await loadNotes()
 }
@@ -122,6 +136,7 @@ const cancelEdit = () => {
 const resetForm = () => {
   form.value = { title: '', description: '' }
   editingNoteId.value = null
+  formError.value = ''
 }
 
 const removeNote = async (id: number) => {
