@@ -33,10 +33,10 @@
           <div class="flex-1 min-w-0">
             <strong class="block truncate">{{ note.title }}</strong>
             <span class="text-gray-600 text-sm line-clamp-2">{{ note.description }}</span>
-            <div class="text-xs text-gray-400 mt-1">
-              Created: {{ formatDate(note.createdAt) }}
+            <div class="flex flex-col text-xs text-gray-400 mt-1">
+              <span>Created: {{ formatDate(note.createdAt) }} </span>
               <span v-if="note.updatedAt && note.updatedAt !== note.createdAt">
-                • Updated: {{ formatDate(note.updatedAt) }}
+                Updated: {{ formatDate(note.updatedAt) }}
               </span>
             </div>
           </div>
