@@ -333,8 +333,16 @@ const deleteConfirmed = async () => {
 }
 
 const formatDate = (dateString?: string): string => {
-  if (!dateString) return ''
-  return new Date(dateString).toLocaleDateString()
+  if (!dateString) return 'N/A'
+  const date = new Date(dateString)
+  return date.toLocaleDateString('en-GB', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  })
 }
 
 const handleKeyDown = (event: KeyboardEvent) => {

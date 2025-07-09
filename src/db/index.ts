@@ -6,6 +6,8 @@ interface Note {
   id?: number
   title: string
   description: string
+  createdAt?: string
+  updatedAt?: string
 }
 
 function openDB(): Promise<IDBDatabase> {
@@ -28,7 +30,13 @@ export async function addNote(note: Note): Promise<number> {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_NAME, 'readwrite')
     const store = tx.objectStore(STORE_NAME)
-    const req = store.add(note)
+    const now = new Date().toISOString()
+    const noteWithTimestamp = {
+      ...note,
+      createdAt: now,
+      updatedAt: now,
+    }
+    const req = store.add(noteWithTimestamp)
     req.onsuccess = () => resolve(req.result as number)
     req.onerror = () => reject(req.error)
   })
@@ -57,12 +65,28 @@ export async function deleteNote(id: number): Promise<void> {
 }
 
 export async function updateNote(note: Note): Promise<void> {
+  if (!note.id) {
+    throw new Error('Note ID is required for update')
+  }
+
   const db = await openDB()
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_NAME, 'readwrite')
     const store = tx.objectStore(STORE_NAME)
-    const req = store.put(note)
-    req.onsuccess = () => resolve()
-    req.onerror = () => reject(req.error)
+
+    // First get the existing note to preserve createdAt
+    const getReq = store.get(note.id!)
+    getReq.onsuccess = () => {
+      const existingNote = getReq.result
+      const updatedNote = {
+        ...note,
+        createdAt: existingNote?.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      }
+      const putReq = store.put(updatedNote)
+      putReq.onsuccess = () => resolve()
+      putReq.onerror = () => reject(putReq.error)
+    }
+    getReq.onerror = () => reject(getReq.error)
   })
 }
