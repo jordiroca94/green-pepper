@@ -6,7 +6,7 @@
         <input
           ref="searchInput"
           v-model="searchQuery"
-          placeholder="Search notes... (Press / to focus)"
+          placeholder="Search notes..."
           class="border rounded-md p-2 w-full focus:ring-2 focus:ring-green-500 focus:border-transparent"
           @keydown.escape="searchQuery = ''"
         />
@@ -28,10 +28,28 @@
         <li
           v-for="note in filteredNotes"
           :key="note.id"
-          class="border-b py-2 flex justify-between items-start hover:bg-gray-50 px-2 rounded transition-colors"
+          class="border-b py-2 flex justify-between items-start hover:bg-gray-50 px-2 transition-colors flex-col"
         >
-          <div class="flex-1 min-w-0">
+          <div class="flex justify-between items-center w-full">
             <strong class="block truncate">{{ note.title }}</strong>
+            <div>
+              <button
+                @click="startEdit(note)"
+                class="text-gray-400 hover:text-gray-600 transition-colors p-1"
+                :aria-label="`Edit note: ${note.title}`"
+              >
+                Edit
+              </button>
+              <button
+                @click="confirmDelete(note)"
+                class="text-red-400 hover:text-red-600 transition-colors p-1"
+                :aria-label="`Delete note: ${note.title}`"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="">
             <span class="text-gray-600 text-sm whitespace-pre-line">{{ note.description }}</span>
             <div class="flex flex-col text-xs text-gray-400 mt-1">
               <span>Created: {{ formatDate(note.createdAt) }} </span>
@@ -39,22 +57,6 @@
                 Updated: {{ formatDate(note.updatedAt) }}
               </span>
             </div>
-          </div>
-          <div class="flex space-x-2 ml-4">
-            <button
-              @click="startEdit(note)"
-              class="text-gray-400 hover:text-gray-600 transition-colors p-1"
-              :aria-label="`Edit note: ${note.title}`"
-            >
-              Edit
-            </button>
-            <button
-              @click="confirmDelete(note)"
-              class="text-red-400 hover:text-red-600 transition-colors p-1"
-              :aria-label="`Delete note: ${note.title}`"
-            >
-              Delete
-            </button>
           </div>
         </li>
       </ul>
