@@ -32,7 +32,7 @@
         >
           <div class="flex-1 min-w-0">
             <strong class="block truncate">{{ note.title }}</strong>
-            <span class="text-gray-600 text-sm line-clamp-2">{{ note.description }}</span>
+            <span class="text-gray-600 text-sm whitespace-pre-line">{{ note.description }}</span>
             <div class="flex flex-col text-xs text-gray-400 mt-1">
               <span>Created: {{ formatDate(note.createdAt) }} </span>
               <span v-if="note.updatedAt && note.updatedAt !== note.createdAt">
@@ -144,7 +144,7 @@
 
       <div
         v-if="noteToDelete"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        class="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
         @click="cancelDelete"
       >
         <div class="bg-white rounded-lg p-6 max-w-sm mx-4" @click.stop>
