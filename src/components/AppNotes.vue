@@ -25,40 +25,13 @@
       </div>
 
       <ul v-else-if="filteredNotes.length > 0" class="pb-6">
-        <li
+        <AppNote
           v-for="note in filteredNotes"
           :key="note.id"
-          class="border-b py-2 flex justify-between items-start hover:bg-gray-50 px-2 transition-colors flex-col"
-        >
-          <div class="flex justify-between items-center w-full">
-            <strong class="block truncate">{{ note.title }}</strong>
-            <div>
-              <button
-                @click="startEdit(note)"
-                class="text-gray-400 hover:text-gray-600 transition-colors p-1"
-                :aria-label="`Edit note: ${note.title}`"
-              >
-                Edit
-              </button>
-              <button
-                @click="confirmDelete(note)"
-                class="text-red-400 hover:text-red-600 transition-colors p-1"
-                :aria-label="`Delete note: ${note.title}`"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-          <div class="">
-            <span class="text-gray-600 text-sm whitespace-pre-line">{{ note.description }}</span>
-            <div class="flex flex-col text-xs text-gray-400 mt-1">
-              <span>Created: {{ formatDate(note.createdAt) }} </span>
-              <span v-if="note.updatedAt && note.updatedAt !== note.createdAt">
-                Updated: {{ formatDate(note.updatedAt) }}
-              </span>
-            </div>
-          </div>
-        </li>
+          :note="note"
+          :on-edit="startEdit"
+          :on-delete="confirmDelete"
+        />
       </ul>
 
       <div v-else-if="!loading" class="text-center py-8 text-gray-500">
@@ -181,7 +154,7 @@ import { ref, computed, onMounted, nextTick, watch } from 'vue'
 import { addNote, getNotes, deleteNote, updateNote } from '../db/index'
 import { Plus } from 'lucide-vue-next'
 
-interface Note {
+export interface Note {
   id?: number
   title: string
   description: string
@@ -334,19 +307,6 @@ const deleteConfirmed = async () => {
   }
 }
 
-const formatDate = (dateString?: string): string => {
-  if (!dateString) return 'N/A'
-  const date = new Date(dateString)
-  return date.toLocaleDateString('en-GB', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-  })
-}
-
 const handleKeyDown = (event: KeyboardEvent) => {
   if (event.key === '/' && !showForm.value && editingNoteId.value === null) {
     event.preventDefault()
@@ -386,6 +346,7 @@ onMounted(() => {
 })
 
 import { onUnmounted } from 'vue'
+import AppNote from './AppNote.vue'
 onUnmounted(() => {
   document.removeEventListener('keydown', handleKeyDown)
 })
