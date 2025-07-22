@@ -1,18 +1,37 @@
 <template>
   <div class="flex justify-center">
     <div class="p-4 max-w-5xl w-full">
-      <h2 class="text-2xl font-bold mb-4">My Notes</h2>
-      <div class="relative mb-4">
-        <input
-          ref="searchInput"
-          v-model="searchQuery"
-          placeholder="Search notes..."
-          class="border rounded-md p-2 w-full focus:ring-2 focus:ring-green-500 focus:border-transparent sm:w-120"
-          @keydown.escape="searchQuery = ''"
-        />
-        <span v-if="searchQuery" class="absolute right-2 top-2 text-gray-400 text-sm">
-          {{ filteredNotes.length }} found
-        </span>
+      <h2 class="text-2xl font-bold mb-4 text-center sm:text-left md:text-center">My Notes</h2>
+
+      <div
+        v-if="filteredNotes.length === 0 && !loading && !searchQuery"
+        class="flex flex-col items-center gap-4 py-8 text-gray-500"
+      >
+        <div class="relative w-full max-w-md">
+          <input
+            ref="searchInput"
+            v-model="searchQuery"
+            placeholder="Search notes..."
+            class="border rounded-md p-2 w-full focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            @keydown.escape="searchQuery = ''"
+          />
+        </div>
+        <p>No notes yet. Create your first note!</p>
+      </div>
+
+      <div v-else class="flex justify-center mb-4">
+        <div class="relative w-full max-w-md">
+          <input
+            ref="searchInput"
+            v-model="searchQuery"
+            placeholder="Search notes..."
+            class="border rounded-md p-2 w-full focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            @keydown.escape="searchQuery = ''"
+          />
+          <span v-if="searchQuery" class="absolute right-2 top-2 text-gray-400 text-sm">
+            {{ filteredNotes.length }} found
+          </span>
+        </div>
       </div>
 
       <div v-if="loading" class="flex justify-center py-8">
@@ -34,9 +53,8 @@
         />
       </ul>
 
-      <div v-else-if="!loading" class="text-center py-8 text-gray-500">
-        <p v-if="searchQuery">No notes found matching "{{ searchQuery }}"</p>
-        <p v-else>No notes yet. Create your first note!</p>
+      <div v-else-if="!loading && searchQuery" class="text-center py-8 text-gray-500">
+        <p>No notes found matching "{{ searchQuery }}"</p>
       </div>
 
       <div class="mb-5 w-full flex justify-center">
