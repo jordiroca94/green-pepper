@@ -1,13 +1,13 @@
 <template>
   <div class="flex justify-center">
-    <div class="p-4 max-w-3xl w-full">
+    <div class="p-4 max-w-5xl w-full">
       <h2 class="text-2xl font-bold mb-4">My Notes</h2>
       <div class="relative mb-4">
         <input
           ref="searchInput"
           v-model="searchQuery"
           placeholder="Search notes..."
-          class="border rounded-md p-2 w-full focus:ring-2 focus:ring-green-500 focus:border-transparent"
+          class="border rounded-md p-2 w-full focus:ring-2 focus:ring-green-500 focus:border-transparent sm:w-120"
           @keydown.escape="searchQuery = ''"
         />
         <span v-if="searchQuery" class="absolute right-2 top-2 text-gray-400 text-sm">
@@ -39,9 +39,9 @@
         <p v-else>No notes yet. Create your first note!</p>
       </div>
 
-      <div class="mb-5">
+      <div class="mb-5 w-full flex justify-center">
         <button
-          class="flex items-center gap-2 cursor-pointer bg-green-600 hover:bg-white group px-3 py-2 w-full justify-center rounded-md border border-transparent hover:border-green-600 transition-colors focus:ring-2 focus:ring-green-500"
+          class="flex items-center gap-2 cursor-pointer bg-green-600 hover:bg-white group px-3 py-2 w-full sm:w-60 justify-center rounded-md border border-transparent hover:border-green-600 transition-colors focus:ring-2 focus:ring-green-500"
           @click="toggleForm"
           @keydown.enter="toggleForm"
         >
@@ -70,7 +70,7 @@
             ref="titleInput"
             v-model.trim="form.title"
             placeholder="Title"
-            class="border rounded-md p-2 w-full focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            class="border rounded-md p-2 w-full focus:ring-2 focus:ring-green-500 focus:border-transparent sm:w-120"
             :class="{ 'border-red-500': formErrors.title }"
             maxlength="100"
             required
@@ -94,9 +94,9 @@
           <p class="text-gray-400 text-xs mt-1">{{ form.description.length }}/1000 characters</p>
         </div>
 
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col w-full items-center gap-2">
           <button
-            class="flex items-center gap-2 cursor-pointer bg-green-600 hover:bg-white hover:text-green-600 text-white group px-3 py-2 w-full justify-center rounded-md border border-transparent hover:border-green-600 transition-colors focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="flex items-center gap-2 cursor-pointer bg-green-600 hover:bg-white hover:text-green-600 text-white group px-3 py-2 w-full sm:w-60 justify-center rounded-md border border-transparent hover:border-green-600 transition-colors focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
             type="submit"
             :disabled="saving"
           >
@@ -109,7 +109,7 @@
           <button
             v-if="editingNoteId !== null"
             type="button"
-            class="flex items-center gap-2 cursor-pointer hover:bg-green-600 text-green-600 hover:text-white group px-3 py-2 w-full justify-center rounded-md border hover:border-transparent border-green-600 transition-colors focus:ring-2 focus:ring-green-500"
+            class="flex items-center gap-2 cursor-pointer hover:bg-green-600 text-green-600 hover:text-white group px-3 py-2 w-full sm:w-60 justify-center rounded-md border hover:border-transparent border-green-600 transition-colors focus:ring-2 focus:ring-green-500"
             @click="cancelEdit"
           >
             Cancel

@@ -2,9 +2,9 @@
   <li
     class="border-b py-2 flex justify-between items-start hover:bg-gray-50 px-2 transition-colors flex-col"
   >
-    <div class="flex justify-between items-center w-full">
+    <div class="flex justify-between items-center w-full mb-2">
       <strong class="block truncate">{{ note.title }}</strong>
-      <div>
+      <div class="whitespace-nowrap">
         <button
           @click="onEdit(note)"
           class="text-gray-400 hover:text-gray-600 transition-colors p-1"
@@ -22,10 +22,13 @@
       </div>
     </div>
     <div>
-      <span class="text-gray-600 text-sm whitespace-pre-line">{{ note.description }}</span>
-      <div class="flex flex-col text-xs text-gray-400 mt-1">
+      <span
+        class="text-gray-600 text-sm whitespace-pre-line break-words"
+        v-html="linkedDescription"
+      ></span>
+      <div class="flex flex-col text-xs text-gray-400 mt-3">
         <span>Created: {{ formatDate(note.createdAt) }}</span>
-        <span v-if="note.updatedAt && note.updatedAt !== note.createdAt">
+        <span class="mt-1" v-if="note.updatedAt && note.updatedAt !== note.createdAt">
           Updated: {{ formatDate(note.updatedAt) }}
         </span>
       </div>
@@ -34,9 +37,10 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { Note } from './AppNotes.vue'
 
-defineProps<{
+const props = defineProps<{
   note: {
     id?: number
     title: string
@@ -60,4 +64,18 @@ const formatDate = (dateString?: string): string => {
     hour12: true,
   })
 }
+
+const escapeAndLinkify = (text: string): string => {
+  const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+
+  const urlRegex = /((https?:\/\/[^\s<]+))/g
+  return escaped.replace(urlRegex, (url) => {
+    const safeUrl = url.replace(/"/g, '&quot;')
+    return `<a href="${safeUrl}" class="text-blue-600 underline" target="_blank" rel="noopener noreferrer">${safeUrl}</a>`
+  })
+}
+
+const linkedDescription = computed(() => {
+  return escapeAndLinkify(props.note.description || '')
+})
 </script>

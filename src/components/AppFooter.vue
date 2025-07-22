@@ -1,6 +1,6 @@
 <template>
   <footer class="bg-green-600 text-white py-4">
-    <div class="max-w-320 mx-auto px-4 flex items-center justify-between">
+    <div class="max-w-5xl mx-auto px-4 flex items-center justify-between">
       <span class="text-sm">&copy; 2025 Green Pepper. All rights reserved.</span>
 
       <a
