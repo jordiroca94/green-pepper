@@ -28,7 +28,7 @@
             class="w-full px-4 py-3 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
             @keydown.escape="searchQuery = ''"
           />
-          <span v-if="searchQuery" class="absolute right-2 top-2 text-gray-400 text-sm">
+          <span v-if="searchQuery" class="absolute right-4 top-4 text-gray-400 text-sm">
             {{ filteredNotes.length }} found
           </span>
         </div>
