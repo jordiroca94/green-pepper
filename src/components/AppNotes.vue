@@ -25,7 +25,7 @@
             ref="searchInput"
             v-model="searchQuery"
             placeholder="Search notes..."
-            class="border rounded-md p-2 w-full focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            class="w-full px-4 py-3 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
             @keydown.escape="searchQuery = ''"
           />
           <span v-if="searchQuery" class="absolute right-2 top-2 text-gray-400 text-sm">
