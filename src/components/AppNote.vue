@@ -1,6 +1,6 @@
 <template>
   <li
-    class="border-b py-2 flex justify-between items-start hover:bg-gray-50 px-2 transition-colors flex-col"
+    class="border-b border-gray-300 py-2 flex justify-between items-start rounded-t px-2 transition-colors flex-col"
   >
     <div class="flex justify-between items-center w-full mb-2">
       <strong class="block truncate">{{ note.title }}</strong>

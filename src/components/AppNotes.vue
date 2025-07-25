@@ -88,7 +88,7 @@
             ref="titleInput"
             v-model.trim="form.title"
             placeholder="Title"
-            class="border rounded-md p-2 w-full focus:ring-2 focus:ring-green-500 focus:border-transparent sm:w-120"
+            class="border border-gray-300 rounded-md p-2 w-full focus:ring-2 focus:ring-green-500 focus:border-transparent sm:w-120"
             :class="{ 'border-red-500': formErrors.title }"
             maxlength="100"
             required
@@ -101,7 +101,7 @@
           <textarea
             v-model.trim="form.description"
             placeholder="Description"
-            class="border rounded-md p-2 w-full h-32 resize-vertical focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            class="border border-gray-300 rounded-md p-2 w-full h-32 resize-vertical focus:ring-2 focus:ring-green-500 focus:border-transparent"
             :class="{ 'border-red-500': formErrors.description }"
             maxlength="1000"
             required
@@ -112,7 +112,7 @@
           <p class="text-gray-400 text-xs mt-1">{{ form.description.length }}/1000 characters</p>
         </div>
 
-        <div class="flex flex-col w-full items-center gap-2">
+        <div class="flex justify-center sm:flex-row flex-col w-full items-center gap-2">
           <button
             class="flex items-center gap-2 cursor-pointer bg-green-600 hover:bg-white hover:text-green-600 text-white group px-3 py-2 w-full sm:w-60 justify-center rounded-md border border-transparent hover:border-green-600 transition-colors focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
             type="submit"
