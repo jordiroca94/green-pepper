@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center">
     <div class="p-4 max-w-5xl w-full">
-      <h2 class="text-2xl font-bold mb-4 text-center sm:text-left md:text-center">My Notes</h2>
+      <h2 class="text-2xl font-bold mb-4 text-center">My Notes</h2>
 
       <div
         v-if="filteredNotes.length === 0 && !loading && !searchQuery"
